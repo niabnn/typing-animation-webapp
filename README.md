@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div align="center">
   <img height="70px" src="https://skillicons.dev/icons?i=react,vite,tailwind" alt="Technology Icons">
   <h1>Typing animation webApp</h1>
@@ -211,3 +212,6 @@ _Feel free to reach out if you have questions or just want to chat about web adv
 <p align="center">
    Thank you for using the <strong>React Vite Tailwind App Template</strong>! Happy coding! 🚀
 </p>
+=======
+# typing-animation-webapp
+>>>>>>> 6dde41c9e9150b4904a0ca97d165e855676b78c2
