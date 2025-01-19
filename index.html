@@ -1,13 +1,237 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite-React-Tailwind-Prettier</title>
-</head>
-<body>
-<div id="root"></div>
-<script type="module" src="./src/main.jsx"></script>
-</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing animation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body class="bg-white text-white">
+    <div id="editor-background"></div>
+    <div id="editor">
+      <div id="editor-header">
+        <div class="editor-circle circle-red"></div>
+        <div class="editor-circle circle-yellow"></div>
+        <div class="editor-circle circle-green"></div>
+      </div>
+      <div id="editor-lines">
+        <code id="line1"></code>
+        <code id="line2"></code>
+        <code id="line3"></code>
+        <code id="input-wrapper"
+          ><input
+            id="input-line"
+            type="text"
+            placeholder="Escribe aquí y presiona Enter"
+        /></code>
+      </div>
+      <div id="text-container" class="text"></div>
+    </div>
+
+    <div class="absolute bottom-5 left-5 flex space-x-4">
+      <!-- Botón de tema -->
+      <button id="toggle-theme" class="bg-white-500 rounded-full p-2">
+        <svg
+          id="lightbulb-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          class="h-8 w-8 text-yellow-500"
+        >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 2a7 7 0 00-7 7c0 2.82 1.64 5.61 4 6.93V18a1 1 0 001 1h4a1 1 0 001-1v-2.07c2.36-1.32 4-4.11 4-6.93a7 7 0 00-7-7zm-3 18h6m-6 2h6"
+          />
+        </svg>
+      </button>
+
+      <!-- Botón de refrescar -->
+      <button id="refresh" class="rounded-full circle-yellow p-2">
+        <svg
+          fill="currentColor"
+          height="32px"
+          width="32px"
+          version="1.1"
+          id="Layer_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 383.748 383.748"
+          xml:space="preserve"
+          class="text-black"
+        >
+          <g>
+            <path
+              d="M62.772,95.042C90.904,54.899,137.496,30,187.343,30c83.743,0,151.874,68.13,151.874,151.874h30
+                    C369.217,81.588,287.629,0,187.343,0c-35.038,0-69.061,9.989-98.391,28.888C70.368,40.862,54.245,56.032,41.221,73.593
+                    L2.081,34.641v113.365h113.91L62.772,95.042z"
+            />
+            <path
+              d="M381.667,235.742h-113.91l53.219,52.965c-28.132,40.142-74.724,65.042-124.571,65.042
+                    c-83.744,0-151.874-68.13-151.874-151.874h-30c0,100.286,81.588,181.874,181.874,181.874c35.038,0,69.062-9.989,98.391-28.888
+                    c18.584-11.975,34.707-27.145,47.731-44.706l39.139,38.952V235.742z"
+            />
+          </g>
+        </svg>
+      </button>
+    </div>
+
+    <script>
+      document.getElementById("refresh").addEventListener("click", () => {
+        location.reload(); // Recarga la página
+      });
+
+      const textContainer = document.getElementById("text-container");
+      const binaryText = "01001110";
+
+      const editorLines = [
+
+        "Hola mundo",
+        "Mi nombre es Estefania",
+        "Gracias por visitar mi sitio web",
+      ];
+      const lineElements = [
+        document.getElementById("line1"),
+        document.getElementById("line2"),
+        document.getElementById("line3"),
+        document.getElementById("line4"),
+      ];
+
+      const inputLine = document.getElementById("input-line");
+      const inputWrapper = document.getElementById("input-wrapper");
+      const typingSound = new Audio("/spacebar-click-keyboard-199448.mp3");
+      const deleteSound = new Audio("/keyboard-spacebar-hit-101812.mp3");
+      const hoverSound = new Audio("/glitch-sound-fx-pack-04-118236.mp3");
+
+      let isAnimating = false;
+
+      function playSound(sound) {
+        sound.currentTime = 0;
+        sound.play();
+      }
+
+      function animarLinea(textoBinario, textoLinea, elemento, callback) {
+        let i = 0;
+
+        function escribirBinario() {
+          const interval = setInterval(
+            () => {
+              playSound(typingSound);
+              elemento.textContent += textoBinario[i];
+              i++;
+              if (i === textoBinario.length) {
+                clearInterval(interval);
+                setTimeout(borrarBinario, 500);
+              }
+            },
+            Math.random() * 100 + 50,
+          );
+        }
+
+        function borrarBinario() {
+          let j = textoBinario.length;
+          const interval = setInterval(() => {
+            elemento.textContent = elemento.textContent.slice(0, j);
+            playSound(deleteSound);
+            j--;
+            if (j < 0) {
+              clearInterval(interval);
+              setTimeout(escribirLinea, 500);
+            }
+          }, 50);
+        }
+
+        function escribirLinea() {
+          let k = 0;
+          const interval = setInterval(
+            () => {
+              const charSpan = document.createElement("span");
+              const char = textoLinea[k] === " " ? "\u00A0" : textoLinea[k];
+              charSpan.textContent = char;
+              playSound(typingSound);
+              charSpan.addEventListener("mouseover", () => {
+                playSound(hoverSound);
+                charSpan.textContent = Math.random() > 0.5 ? "0" : "1";
+                setTimeout(() => {
+                  charSpan.classList.add("resetting");
+                  setTimeout(() => {
+                    playSound(typingSound);
+                    charSpan.textContent = char;
+                    charSpan.classList.remove("resetting");
+                    if (!isAnimating) {
+                      playSound(typingSound);
+                      isAnimating = true;
+                      resetAndRestartAnimation();
+                    }
+                  }, 400);
+                }, 3000);
+              });
+              elemento.appendChild(charSpan);
+              k++;
+              if (k === textoLinea.length) {
+                clearInterval(interval);
+                if (callback) callback();
+              }
+            },
+            Math.random() * 100 + 50,
+          );
+        }
+
+        escribirBinario();
+      }
+
+      function animarLineasConsecutivas(lineas, elementos, textoBinario) {
+        let index = 0;
+
+        function animarSiguienteLinea() {
+          if (index < lineas.length) {
+            animarLinea(textoBinario, lineas[index], elementos[index], () => {
+              index++;
+              animarSiguienteLinea();
+            });
+          } else {
+            isAnimating = false;
+            inputLine.style.display = "block";
+            inputLine.placeholder =
+              "Agrega una linea extra de código y presiona Enter  :)";
+          }
+        }
+        animarSiguienteLinea();
+      }
+
+      function resetAndRestartAnimation() {
+        lineElements.forEach((el) => (el.textContent = ""));
+        inputLine.style.display = "none";
+        inputLine.placeholder = "";
+        setTimeout(
+          () => animarLineasConsecutivas(editorLines, lineElements, binaryText),
+          500,
+        );
+      }
+
+      const toggleThemeButton = document.getElementById("toggle-theme");
+      toggleThemeButton.addEventListener("click", () => {
+        document.body.classList.toggle("bg-gray-900");
+        document.body.classList.toggle("bg-gray-100");
+        document.body.classList.toggle("text-white");
+        document.body.classList.toggle("text-black");
+      });
+
+      inputLine.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          const customText = inputLine.value.trim();
+          if (customText) {
+            animarLinea(binaryText, customText, inputLine.parentElement, () => {
+              inputLine.value = "";
+            });
+          }
+        }
+      });
+      animarLineasConsecutivas(editorLines, lineElements, binaryText);
+    </script>
+  </body>
 </html>

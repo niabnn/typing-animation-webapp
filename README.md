@@ -1,9 +1,9 @@
 <div align="center">
   <img height="70px" src="https://skillicons.dev/icons?i=react,vite,tailwind" alt="Technology Icons">
-  <h1>React Vite Tailwind App Template</h1>
+  <h1>Typing animation webApp</h1>
 </div>
 
-Welcome to the **React Vite Tailwind App Template**! This template is a starting point for building dynamic and interactive web applications using Vite and React.
+Welcome to my  **typing animation webapp**! This template is a starting point for building dynamic and interactive web applications using Vite and React.
 
 ## Table of Contents
 
@@ -64,8 +64,8 @@ This template will continue to evolve to better meet diverse needs. Feel free to
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/RanitManik/React-Vite-Tailwind-App-Template.git
-   cd react-vite-app-template
+   git clone https://github.com/niabnn/typing-animation-webapp.git
+   cd typing-animation-webapp
    ```
 
 2. **Install dependencies:**
@@ -143,7 +143,7 @@ yarn format
 The project structure is as follows:
 
 ```
-react-vite-app-template/
+typing-animation-webapp/
 ├── index.html
 ├── package.json
 ├── postcss.config.js
@@ -193,14 +193,15 @@ We welcome contributions to enhance the Gemini Clone project. To contribute:
 
 ## Contact
 
-- **LinkedIn**: [Ranit Manik](https://www.linkedin.com/in/ranit-manik/)
-- **GitHub**: [RanitManik](https://github.com/RanitManik)
-- **Email**: [ranitmanik.dev@gmail.com](mailto:ranitmanik.dev@gmail.com)
+- **LinkedIn**: [Estefania Goez](https://www.linkedin.com/in/estefania-goez/)
+- **GitHub**: [niabnn](https://github.com/RanitManik)
+- **Email**: [estefaniagoez.dev@gmail.com](mailto:estefaniagoez.dev@gmail.com)
 
 _Feel free to reach out if you have questions or just want to chat about web adventures!_
 
 ## Acknowledgments
 
+- [React vite tailwind template](https://github.com/RanitManik/React-Vite-Tailwind-App-Template)
 - [Markdown Badges](https://github.com/Ileriayo/markdown-badges)
 - [shields.io Badges](https://shields.io/)
 - [Skill Icons](https://github.com/tandpfun/skill-icons)
